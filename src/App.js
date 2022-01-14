@@ -7,7 +7,6 @@ import { Footer } from './componets/Footer/Footer';
 
 
 
-// console.log(`${process.env.REACT_APP_NEWS_API_KEY}`);
 
 function App() {
   const [category, setCategory] = useState("general");
@@ -28,7 +27,6 @@ function App() {
 
       // const news = await axios.get(`${proxyUrl}https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=${loadMore}&category=${category}`);
 
-      console.log(news);
       setNewsArray(news.data.articles);
       setNewsResults(news.data.totalResults);
 
@@ -41,7 +39,6 @@ function App() {
   useEffect(() => {
 
     newsApi();
-
     //eslint-disable-next-line
   }, [newsResults, category, loadMore]);
 
