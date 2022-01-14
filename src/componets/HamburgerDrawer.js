@@ -85,8 +85,8 @@ export default function SwipeableTemporaryDrawer({ setCategory }) {
                     <ListItem
                         style={{ height: 40, borderRadius: 3 }}
                         button key={text}
-                        onClick={() => setCategory(text)}
-                    >
+                        onClick={() => setCategory(text)}>
+
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}

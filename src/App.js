@@ -7,6 +7,8 @@ import { Footer } from './componets/Footer/Footer';
 
 
 
+// console.log(`${process.env.REACT_APP_NEWS_API_KEY}`);
+
 function App() {
   const [category, setCategory] = useState("general");
   const [newsArray, setNewsArray] = useState([]);
@@ -19,12 +21,12 @@ function App() {
     try {
 
 
-      // const proxyUrl = "https://cors-anywhere.herokuapp.com/${proxyUrl}";
+      // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
-      const news = await axios.get(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.REACT_APP_API_KEY}&pageSize=${loadMore}&category=${category}`
-      );
+      const news = await axios.get(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=${loadMore}&category=${category}`);
 
-      // const news = await axios.get(`${proxyUrl}https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}&category=${category}&pageSize=${loadMore}`);
+
+      // const news = await axios.get(`${proxyUrl}https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=${loadMore}&category=${category}`);
 
       console.log(news);
       setNewsArray(news.data.articles);
@@ -34,11 +36,12 @@ function App() {
     catch (error) {
       console.log(error);
     }
-    console.log(newsArray);
 
   }
   useEffect(() => {
+
     newsApi();
+
     //eslint-disable-next-line
   }, [newsResults, category, loadMore]);
 
