@@ -1,23 +1,61 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react'
+import NavInshorts from './componets/NavInshorts';
+import NewsContent from './componets/NewsContent/NewsContent';
+import axios from 'axios';
+// import apiKey from './data/config';
+import { Footer } from './componets/Footer/Footer';
+
+
 
 function App() {
+  const [category, setCategory] = useState("general");
+  const [newsArray, setNewsArray] = useState([]);
+
+  const [newsResults, setNewsResults] = useState();
+
+  const [loadMore, setLoadMore] = useState(20);
+
+  const newsApi = async () => {
+    try {
+
+
+      const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
+      const news = await axios.get(`${proxyUrl}https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.REACT_APP_API_KEY}&pageSize=${loadMore}&category=${category}`
+      );
+
+      // const news = await axios.get(`${proxyUrl}https://newsapi.org/v2/top-headlines?country=in&apiKey=${apiKey}&category=${category}&pageSize=${loadMore}`);
+
+      console.log(news);
+      setNewsArray(news.data.articles);
+      setNewsResults(news.data.totalResults);
+
+    }
+    catch (error) {
+      console.log(error);
+    }
+    console.log(newsArray);
+
+  }
+  useEffect(() => {
+    newsApi();
+    //eslint-disable-next-line
+  }, [newsResults, category, loadMore]);
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
+      <NavInshorts setCategory={setCategory} />
+      <NewsContent
+        setLoadMore={setLoadMore}
+        loadMore={loadMore}
+        newsArray={newsArray}
+        newsResults={newsResults} />
+      <Footer />
     </div>
   );
 }
